@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础版本</title>
+  <style>
+    .pic1 {
+      width: 400px;
+    }
+
+    .mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .previewImg {
+      position: absolute;
+      width: 80%;
+      left: 50%;
+      top: 200px;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <img class="pic1" src="./xtjj.jpg" alt="">
+  <script>
+    const pic1 = document.querySelector(".pic1");
+    pic1.addEventListener("click", function () {
+      // 创建蒙层
+      const mask = document.createElement("div")
+      mask.classList.add("mask");
+      const pic1Clone = pic1.cloneNode();
+      pic1Clone.classList.add("previewImg");
+      // 将图片和蒙层添加到页面中
+      mask.appendChild(pic1Clone)
+      document.body.appendChild(mask)
+
+      mask.addEventListener("click", function () {
+        document.body.removeChild(this)
+      })
+    })
+  </script>
+</body>
+
+</html>

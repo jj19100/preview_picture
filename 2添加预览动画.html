@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加预览动画</title>
+  <style>
+    .pic {
+      width: 400px;
+    }
+
+    .mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      transition: all .3s;
+    }
+
+    .previewImg {
+      position: absolute;
+      transform: translateX(-50%);
+      transition: all .3s;
+    }
+  </style>
+</head>
+
+<body>
+  <img class="pic" src="./xtjj.jpg" alt="">
+  <script>
+    const pic = document.querySelector(".pic");
+    pic.addEventListener("click", function () {
+      // 1，克隆元素
+      const pic2 = pic.cloneNode();
+      // 2，计算原图距离窗口left，top的距离
+      picToTop = pic.getBoundingClientRect().x;
+      picToLeft = pic.getBoundingClientRect().y;
+      // 3，设置克隆图片初始位置
+      pic2.style.position = "absolute";
+      pic2.style.left = `${picToLeft}px`;
+      pic2.style.top = `${picToTop}px`;
+      // 4，创建蒙层
+      const mask = document.createElement("div")
+      mask.classList.add("mask");
+      // 5，将元素添加到body中
+      mask.appendChild(pic2)
+      document.body.appendChild(mask)
+      // 6，使用setTimeout是为了触发`transition`，产生动画
+      setTimeout(() => {
+        // 7，隐藏原图片
+        pic.style.visibility = "hidden";
+        // 8，设置预览图片展示宽度以及位置
+        pic2.style.width = "80%";
+        pic2.style.left = "50%";
+        pic2.style.top = `200px`;
+        pic2.classList.add("previewImg");
+      }, 0);
+      // 9，点击蒙层关闭预览
+      mask.addEventListener("click", function () {
+        this.remove()
+      })
+    })
+  </script>
+</body>
+
+</html>
